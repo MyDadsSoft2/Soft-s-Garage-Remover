@@ -1,35 +1,41 @@
 # 🚗 Soft's Garage Remover
 
-A utility for Forza Horizon 6 that detects and removes duplicated vehicles from a player's garage inventory.
+A real-time garage management tool for Forza Horizon 6 that detects and removes duplicated vehicles directly from a player's garage.
 
 ## Features
 
-- 🔍 Scans player garages for duplicate vehicles
-- 🗑️ Removes duplicated cars automatically
-- 💾 Creates backups before making changes
-- ⚡ Fast and lightweight
-- 🖥️ Simple and easy-to-use interface
-
-## Why Was This Made?
-
-Some players end up with duplicate vehicles cluttering their garages. This tool helps clean up garage inventories by identifying and removing duplicate entries while keeping legitimate vehicles intact.
+- 🎮 Attach directly to FH6
+- 🔍 Scan garage inventory for duplicate vehicles
+- 🗑️ Remove selected duplicate cars
+- ⚡ Nuke all duplicates with a single click
+- 📋 View Garage IDs and Car IDs
+- 🖥️ Clean and modern interface
 
 ## How It Works
 
-1. Select your game save.
-2. Scan your garage inventory.
-3. Review detected duplicates.
-4. Remove unwanted duplicate vehicles.
-5. Enjoy a cleaner garage.
+1. Launch Forza Horizon 6.
+2. Open Soft's Garage Remover.
+3. Click **Attach to FH6**.
+4. Click **Load Garage**.
+5. Review detected duplicates.
+6. Remove selected duplicates or use **Nuke All Dupes**.
+
+## Why?
+
+Some players end up with multiple copies of the same vehicle cluttering their garage. Soft's Garage Remover helps keep collections clean by automatically identifying duplicate entries and removing unwanted copies.
+
+## Screenshot
+
+![Soft's Garage Remover](screenshot.png)
 
 ## Disclaimer
 
-This project is not affiliated with Microsoft, Turn 10 Studios, or :contentReference[oaicite:0]{index=0}.
+This project is not affiliated with Microsoft, Turn 10 Studios, or Playground Games.
 
-Use at your own risk and always keep backups of your saves.
+Use at your own risk.
 
 ---
 
 ### Made by MyDadsSoft
 
-*"Keeping garages clean, one duplicate at a time."*
+*"Keeping garages clean since FH6."*

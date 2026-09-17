@@ -33,7 +33,7 @@ SoftsGarageRemover/
 ├── MainWindow.xaml.cs
 ├── GarageCar.cs
 │
-│   ── Copy these from VantaMenu ──
+│ 
 ├── RemoteDatabase.cs      ← your existing DB class
 ├── Native.cs              ← P/Invoke wrappers  
 ├── Pattern.cs             ← AOB pattern scanner

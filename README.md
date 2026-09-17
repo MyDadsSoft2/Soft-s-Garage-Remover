@@ -40,13 +40,8 @@ SoftsGarageRemover/
 └── RuntimeProfileFeature.cs  ← enum (needed by RemoteDatabase)
 ```
 
-### 2. Fix the namespace
 
-In each copied file, either:
-- Change `namespace VantaMenu` → `namespace SoftsGarageRemover`
-- Or add `using VantaMenu;` at the top of `MainWindow.xaml.cs`
-
-### 3. Build & run
+### 2. Build & run
 
 ```
 dotnet build

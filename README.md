@@ -1,122 +1,85 @@
-# 🚗 Soft's Garage Remover FH6
+# Soft's Garage Remover
 
-[![Ko-fi](https://img.shields.io/badge/Support-Ko--fi-ff5e5b?logo=ko-fi&logoColor=white)](https://ko-fi.com/mydadssoft)
-![Platform](https://img.shields.io/badge/Platform-Windows-blue)
-![Game](https://img.shields.io/badge/Game-Forza%20Horizon%206-orange)
-![Status](https://img.shields.io/badge/Status-Active-success)
-
-A real-time duplicate vehicle remover for Forza Horizon 6.
-
-Soft's Garage Remover attaches directly to a running FH6 process, reads the garage database in memory, and allows players to identify and remove duplicate vehicles from their garage inventory.
-
-![Soft's Garage Remover](screenshot.png)
+A standalone tool for managing your Forza Horizon 6 garage — find and remove 
+duplicate cars without the pain of doing it one-by-one through the game's UI.
 
 ---
 
-## ✨ Features
+## How it works
 
-- 🎮 Attach directly to FH6
-- 🔍 Scan garage inventory for duplicate vehicles
-- 📋 View Garage IDs and Car IDs
-- 🗑️ Remove selected duplicate vehicles
-- ⚡ Nuke all duplicates while keeping one copy of each vehicle
-- 🖥️ Modern and lightweight interface
-- 🔒 No external servers or cloud services
-- ⚙️ Automatic schema detection
+FH6 keeps your garage data in a live in-memory SQLite database while the game
+runs. This tool reads that database to list your cars, spots duplicates, and 
+lets you remove them with SQL DELETE — the same way the game itself would.
+
+Changes happen in the live database. They persist when the game auto-saves. 
+If you want to undo, force-close FH6 (Alt+F4 / Task Manager) before it saves.
 
 ---
 
-## 🚀 How To Use
+## Project setup
 
-1. Launch Forza Horizon 6
+This is a .NET 8 WPF project.
+
+### 1. Copy your existing infrastructure files
+
+You need these files from your VantaMenu project. Drop them into this folder:
+
+```
+SoftsGarageRemover/
+├── SoftsGarageRemover.csproj
+├── App.xaml
+├── App.xaml.cs
+├── MainWindow.xaml
+├── MainWindow.xaml.cs
+├── GarageCar.cs
+│
+│   ── Copy these from VantaMenu ──
+├── RemoteDatabase.cs      ← your existing DB class
+├── Native.cs              ← P/Invoke wrappers  
+├── Pattern.cs             ← AOB pattern scanner
+└── RuntimeProfileFeature.cs  ← enum (needed by RemoteDatabase)
+```
+
+### 2. Fix the namespace
+
+In each copied file, either:
+- Change `namespace VantaMenu` → `namespace SoftsGarageRemover`
+- Or add `using VantaMenu;` at the top of `MainWindow.xaml.cs`
+
+### 3. Build & run
+
+```
+dotnet build
+dotnet run
+```
+
+Or open in Visual Studio / Rider and hit F5.
+
+---
+
+## Usage
+
+1. Launch FH6 and get past the loading screen
 2. Open Soft's Garage Remover
 3. Click **Attach to FH6**
-4. Click **Load Garage**
-5. Review detected duplicate vehicles
-6. Select duplicates manually or click **Nuke All Dupes**
-7. Return to the garage in-game to refresh the vehicle list
+4. Click **Load Garage** — your full car list appears with dupe counts
+5. Click **Select All Dupes** to highlight every extra copy
+6. Review the selection, deselect anything you want to keep
+7. Click **Remove Selected**
+8. In FH6: leave the garage screen and come back — the dupes are gone
+
+Or use **Nuke All Dupes** to remove every duplicate in one shot (keeps 1 of each model).
+
+### Schema issues
+
+FH6's database columns aren't publicly documented. The tool auto-discovers them 
+on attach. If something doesn't work, click **Dump Schema** — it logs the exact
+column names so you can see what FH6 is using in your build.
 
 ---
 
-## 🔒 Transparency
+## Disclaimer
 
-Soft's Garage Remover uses SQL queries against FH6's in-memory garage database.
-
-The tool only interacts with garage vehicle records and does not modify unrelated game data.
-
-### Duplicate Detection
-
-```sql
-SELECT count(*)
-FROM Profile0_Career_Garage G2
-WHERE G2.CarId = G.CarId
-```
-
-This query counts how many copies of each vehicle exist in the garage.
-
-### Remove Selected Vehicle
-
-```sql
-DELETE FROM Profile0_Career_Garage
-WHERE Id = <GarageId>
-```
-
-Removes only the selected garage entry.
-
-### Nuke All Duplicates
-
-```sql
-DELETE FROM Garage
-WHERE Id NOT IN (
-    SELECT MIN(Id)
-    FROM Garage
-    GROUP BY CarId
-)
-```
-
-Keeps one copy of every vehicle and removes additional duplicates.
-
----
-
-## 🛡️ What This Tool Does NOT Do
-
-- ❌ Does not modify credits
-- ❌ Does not modify XP
-- ❌ Does not modify wheelspins
-- ❌ Does not unlock vehicles
-- ❌ Does not add vehicles
-- ❌ Does not communicate with external servers
-- ❌ Does not collect personal information
-- ❌ Does not modify player progression
-
-The tool only reads and modifies garage vehicle entries.
-
----
-
-## ☕ Support The Project
-
-If Soft's Garage Remover helped clean up your FH6 garage and you'd like to support future tools and updates, consider buying me a coffee.
-
-**Ko-fi:** https://ko-fi.com/mydadssoft
-
-Every donation helps support development, testing, and future projects.
-
----
-
-## ⚠️ Disclaimer
-
-This project is not affiliated with Microsoft, Turn 10 Studios, Playground Games, or the Forza franchise.
-
-Use at your own risk.
-
-Always make sure you understand what modifications are being performed before using any third-party tools.
-
----
-
-## ❤️ Made By
-
-### MyDadsSoft
-
-☕ Ko-fi: https://ko-fi.com/mydadssoft
-
-*"Keeping garages clean, one duplicate at a time."*
+This tool modifies the game's live in-memory data. Use offline / in solo play.
+Using any external tool in online multiplayer can risk account action from 
+Playground Games. Use at your own discretion.
